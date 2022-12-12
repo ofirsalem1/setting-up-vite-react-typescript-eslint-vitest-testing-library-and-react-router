@@ -2,6 +2,8 @@
 
 course URL - https://www.youtube.com/watch?app=desktop&v=cchqeWY0Nak
 
+## eslint & prettier
+
 1. npm create vite@latest
 2. npm i -D eslint
 3. npx eslint --init
@@ -24,3 +26,33 @@ course URL - https://www.youtube.com/watch?app=desktop&v=cchqeWY0Nak
     };
 12. change the "plugins" in the .eslintrc.cjs to -> plugins: ['react', '@typescript-eslint', 'prettier'],
 13. Add to the end of the "extends" array in the .eslintrc.cjs -> 'plugin:prettier/recommended',
+    ![ScreenShot](./readme-images/eslintrc.cjs.png)
+
+## vitest
+
+1. npm i -D vitest
+2. change the vite.config.ts as follow ->
+   /_ eslint-disable import/no-extraneous-dependencies _/
+   /// <reference types="vitest" />
+   /// <reference types="vite/client" />
+
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+plugins: [react()],
+test: {
+globals: true,
+environment: 'jsdom',
+setupFiles: ['./src/setupTests.ts'],
+},
+});
+
+3. npm i -D @testing-library/react @testing-library/jest-dom
+4. create setupTests.ts file and write inside it ->
+   /_ eslint-disable import/no-extraneous-dependencies _/
+   import matchers from '@testing-library/jest-dom/matchers';
+   import { expect } from 'vitest';
+
+expect.extend(matchers);
